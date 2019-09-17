@@ -796,6 +796,7 @@ public class DoodleView extends FrameLayout implements IDoodle {
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
+                mIsSaving = false;
                 mDoodleListener.onSaved(DoodleView.this, bitmap, new Runnable() {
                     @Override
                     public void run() {
