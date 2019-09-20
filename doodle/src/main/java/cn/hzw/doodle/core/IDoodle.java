@@ -267,6 +267,13 @@ public interface IDoodle {
      */
     public boolean undo(int step);
 
+
+    public boolean canUndo();
+
+    public boolean canRedo();
+
+    public boolean redo();
+
     /**
      * 获取当前显示的图片(无涂鸦)
      *

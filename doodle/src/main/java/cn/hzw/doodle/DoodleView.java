@@ -105,6 +105,7 @@ public class DoodleView extends FrameLayout implements IDoodle {
 
     // 保存涂鸦操作，便于撤销
     private List<IDoodleItem> mItemStack = new ArrayList<>();
+    private List<IDoodleItem> mUndoStack = new ArrayList<>();
 
     private IDoodlePen mPen;
     private IDoodleShape mShape;
@@ -835,7 +836,27 @@ public class DoodleView extends FrameLayout implements IDoodle {
             step = Math.min(mItemStack.size(), step);
             IDoodleItem item = mItemStack.get(mItemStack.size() - step);
             removeItem(item);
+            mUndoStack.add(item);
             return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canUndo() {
+        return mItemStack.size() > 0;
+    }
+
+    @Override
+    public boolean canRedo() {
+        return mUndoStack.size() > 0;
+    }
+
+    @Override
+    public boolean redo() {
+        if (canRedo()) {
+            addItem(mUndoStack.get(0));
+            mUndoStack.remove(0);
         }
         return false;
     }
@@ -1153,6 +1174,7 @@ public class DoodleView extends FrameLayout implements IDoodle {
 
         mItemStack.add(item);
         item.onAdd();
+        mDoodleListener.onAdd();
 
         mPendingItemsDrawToBitmap.add(item);
         addFlag(FLAG_DRAW_PENDINGS_TO_BACKGROUND);
@@ -1169,6 +1191,7 @@ public class DoodleView extends FrameLayout implements IDoodle {
         mItemStackOnViewCanvas.remove(doodleItem);
         mPendingItemsDrawToBitmap.remove(doodleItem);
         doodleItem.onRemove();
+        mDoodleListener.onRemove();
 
         addFlag(FLAG_RESET_BACKGROUND);
 
