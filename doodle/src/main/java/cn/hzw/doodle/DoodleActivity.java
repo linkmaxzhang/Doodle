@@ -265,6 +265,16 @@ public class DoodleActivity extends Activity {
                 mPenSizeMap.put(DoodlePen.TEXT, DEFAULT_TEXT_SIZE * mDoodle.getUnitSize());
                 mPenSizeMap.put(DoodlePen.BITMAP, DEFAULT_BITMAP_SIZE * mDoodle.getUnitSize());
             }
+
+            @Override
+            public void onAdd() {
+
+            }
+
+            @Override
+            public void onRemove() {
+
+            }
         }, null);
 
         mTouchGestureListener = new DoodleOnTouchGestureListener(mDoodleView, new DoodleOnTouchGestureListener.ISelectionListener() {
