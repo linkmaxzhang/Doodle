@@ -856,7 +856,7 @@ public class DoodleView extends FrameLayout implements IDoodle {
     public boolean redo() {
         if (canRedo()) {
             addItem(mUndoStack.get(mUndoStack.size() - 1));
-            mUndoStack.remove(0);
+            mUndoStack.remove(mUndoStack.get(mUndoStack.size() - 1));
         }
         return false;
     }
